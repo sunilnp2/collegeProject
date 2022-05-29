@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Review</title>
+  </head>
+  <body>
+    <h1>This is review</h1>
+{% if messages %}
+{% for mess in messages %}
+<h3 style = "color:red;"> {{ mess }}</h3>
+{% endfor %}
+{% endif %}
+    <form action="" method="POST" novalidate>
+      {% csrf_token %}
+      {{form.non_field_errors}}
+        {% for field in form %}
+      <div>
+        
+        {{ field.label_tag}} {{ field }} <span>{{ field.errors|striptags}}</span><br> <hr>
+      </div> 
+      {% endfor %}
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>

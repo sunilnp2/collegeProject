@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>Welcone to Login</h1>
+    <form method ="POST" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors}}
+      {% for field in form %}
+      <div>
+          {{ field.label_tag}} {{ field}} {{ field.errors|striptags}} <br> <hr>
+      </div>
+      {% endfor %}
+      <button type="Submit">Submit</button>
+      <p>Not login? <a href="{% url 'signupin:signup'%}">Signup</a></p>
+    </form>
+  </body>
+</html>
