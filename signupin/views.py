@@ -5,7 +5,7 @@ from .forms import Myreview, SignupForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
 from django.contrib.auth import authenticate,login,logout
-from django.contrib import auth
+from django.contrib import auth 
 
 # Create your views here.
 from .models import *
@@ -76,10 +76,18 @@ def login(request):
 #         fm = AuthenticationForm()
 #     return render(request,'login.html', {'form':fm})
 
-
+from datetime import timedelta
 def profile(request):
     user = request.user
     if user.is_authenticated:
+        # date = MeroTime.objects.all()
+        # {'mydate':date}
+        # create_date = mydate.create_at
+        # print(create_date)
+        # n = 2
+        # c_date = date.create_at[0]
+        # final_date = c_date - timedelta(minutes=n)
+
         return render(request, 'profile.html')
     else:
         return redirect('signupin:signup')
@@ -88,3 +96,18 @@ def profile(request):
 def logout(request):
     auth.logout(request)
     return redirect('signupin:login')
+
+
+# django rest framework start
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+@api_view(['GET', 'POST'])
+def review_api(request):
+    if request.method == "GET":
+        # msg = "THis is get request"
+        return Response({'msg':'THis is get request'})
+
+
+    if request.method == "POST":
+        return Response({'msg':"This is POST request"})

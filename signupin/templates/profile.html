@@ -14,6 +14,11 @@
     {% endif %}
     {% if user.is_authenticated %}
    <h1>Welcone to Profile Mr/s {{ user.username}} </h1>
+   {% for d in date%}
+   <h2> {{d.name}}</h2>
+   <h2> {{d.create_at}}</h2>
+   <h2> {{create_date}}</h2>
+   {% endfor%}
    <h2> {{ user.first_name }} {{ user.last_name }}</h2>
    <h2> {{ user.email }}</h2>
     {% endif %}

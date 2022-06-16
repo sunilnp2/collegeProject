@@ -4,3 +4,4 @@ from .models import *
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ['id','name','review','tick']
 admin.site.register(Review, ReviewAdmin)
+admin.site.register(MeroTime)
