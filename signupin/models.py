@@ -15,3 +15,9 @@ class MeroTime(models.Model):
     name = models.CharField(max_length=200)
     create_at = models.DateTimeField(auto_now=True)
 
+class Stud(models.Model):
+    name = models.CharField(max_length=200)
+    age = models.IntegerField()
+    
+
+

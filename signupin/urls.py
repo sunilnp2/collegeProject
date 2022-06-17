@@ -10,5 +10,6 @@ urlpatterns = [
     path('profile/', profile, name='profile'), 
 
     # url for django rest framework 
-    path('revapi',review_api, name = "revapi" ),
+    # path('studapi',stud_api, name = "studapi" ),
+    path('studapi/<int:pk>',stud_api, name = "studapi" ),
 ]

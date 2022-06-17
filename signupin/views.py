@@ -1,6 +1,10 @@
+from ctypes import set_errno
 import time
+from urllib import response
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
+
+from signupin.serializers import ReviewSerializers, StudSerializers
 from .forms import Myreview, SignupForm
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm 
@@ -101,13 +105,56 @@ def logout(request):
 # django rest framework start
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
+from django.views.decorators.csrf import csrf_exempt
 
-@api_view(['GET', 'POST'])
-def review_api(request):
-    if request.method == "GET":
-        # msg = "THis is get request"
-        return Response({'msg':'THis is get request'})
+# @csrf_exempt
+@api_view(['GET', 'POST','PUT','PATCH', 'DELETE'])
+def stud_api(request, pk = None):
+    try:
+        id = pk
+        stu = Stud.objects.get(id = id)
+
+    except :
+        return Response(status= status.HTTP_404_NOT_FOUND)
+        
+    
+    if request.method == 'GET':
+        serializer = StudSerializers(stu)
+        return Response(serializer.data)
+
 
 
     if request.method == "POST":
-        return Response({'msg':"This is POST request"})
+        serializer = StudSerializers(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':"DAta Created!"}, status = status.HTTP_201_CREATED)
+        return Response(serializer.errors)
+
+    
+    if request.method == "PUT":
+        # id = pk
+        # stu = Stud.objects.get(id = id)
+        serializer = StudSerializers(stu, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':"Data Updated Using Put"}, status= status.HTTP_100_CONTINUE)
+        return Response(serializer.errors)
+
+    if request.method == "PATCH":
+        # id = pk 
+        # stu = Stud.objects.get(id = id)
+        serializer = StudSerializers(stu, data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':"Data crated using Patch"})
+        return Response(serializer.errors)
+
+    if request.method == "DELETE":
+        # id = pk
+        # stu = Stud.objects.get(id = id)
+        # serializer = StudSerializers(stu, data = request.data)
+        stu.delete()
+        return Response({'msg':"Data Deleted"})
+    
